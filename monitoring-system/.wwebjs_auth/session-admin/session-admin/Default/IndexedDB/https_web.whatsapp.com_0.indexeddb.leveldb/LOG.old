@@ -1,0 +1,4 @@
+2025/04/07-17:30:40.880 8007 Reusing MANIFEST /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/07-17:30:40.881 8007 Recovering log #2044
+2025/04/07-17:30:40.884 8007 Reusing old log /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/002044.log 
+2025/04/07-17:30:42.374 fa03 Manual compaction at level-0 from '\x00=\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00>\x00\x00\x00' @ 0 : 0; will stop at (end)
