@@ -187,6 +187,33 @@ const getUserQR = async (req: AuthRequest, res: Response): Promise<void> => {
       return;
     }
 
+    // Проверяем статус авторизации в БД
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      console.log('[QR-DEBUG] Ошибка: пользователь не найден');
+      res.status(404).json({ 
+        success: false,
+        message: 'Пользователь не найден'
+      });
+      return;
+    }
+
+    if (user.whatsappAuthorized) {
+      console.log('[QR-DEBUG] Пользователь уже авторизован в WhatsApp');
+      res.json({ 
+        success: true,
+        status: 'ready',
+        whatsappAuthorized: true,
+        message: 'WhatsApp клиент готов к работе',
+        user: {
+          id: user._id,
+          phoneNumber: user.phoneNumber
+        }
+      });
+      return;
+    }
+
+    // Если пользователь не авторизован, генерируем новый QR-код
     console.log('[QR-DEBUG] Запрос QR-кода для пользователя:', userId);
 
     // Отключаем кэширование
@@ -201,8 +228,14 @@ const getUserQR = async (req: AuthRequest, res: Response): Promise<void> => {
     // Отправляем начальный ответ
     res.json({ 
       success: true,
+      status: 'pending',
+      whatsappAuthorized: false,
       qrCode: qrCode,
-      message: 'Генерация QR-кода начата. Ожидайте получения через WebSocket.'
+      message: 'Генерация QR-кода начата. Ожидайте получения через WebSocket.',
+      user: {
+        id: user._id,
+        phoneNumber: user.phoneNumber
+      }
     });
     console.log('[QR-DEBUG] Ответ отправлен клиенту');
 
@@ -221,10 +254,22 @@ const handleQRScanned = async (req: AuthRequest, res: Response): Promise<void> =
       return;
     }
 
-    // Обновляем статус пользователя
-    await UserModel.findByIdAndUpdate(userId, { whatsappAuthorized: true });
-    res.json({ message: 'QR-код успешно отсканирован' });
+    // Обновляем статус пользователя в БД
+    await UserModel.findByIdAndUpdate(
+      userId,
+      { whatsappAuthorized: true },
+      { new: true }
+    );
+
+    console.log(`[QR-DEBUG] Статус WhatsApp обновлен для пользователя ${userId}`);
+    res.json({ 
+      success: true,
+      message: 'QR-код успешно отсканирован',
+      whatsappAuthorized: true,
+      status: 'ready'
+    });
   } catch (error) {
+    console.error('[QR-DEBUG] Ошибка при обновлении статуса:', error);
     handleError(res, error, 'Ошибка при обработке сканирования QR-кода');
   }
 };

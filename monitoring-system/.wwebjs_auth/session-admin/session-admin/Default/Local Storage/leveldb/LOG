@@ -1,3 +1,6 @@
-2025/04/07-17:32:52.240 3003 Reusing MANIFEST /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Local Storage/leveldb/MANIFEST-000001
-2025/04/07-17:32:52.242 3003 Recovering log #7
-2025/04/07-17:32:52.242 3003 Reusing old log /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Local Storage/leveldb/000007.log 
+2025/04/07-20:34:05.634 3b03 Reusing MANIFEST /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Local Storage/leveldb/MANIFEST-000001
+2025/04/07-20:34:05.637 3b03 Recovering log #20
+2025/04/07-20:34:05.639 3b03 Reusing old log /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Local Storage/leveldb/000020.log 
+2025/04/07-23:28:15.870 3b03 Level-0 table #24: started
+2025/04/07-23:28:15.887 3b03 Level-0 table #24: 16573 bytes OK
+2025/04/07-23:28:15.892 3b03 Delete type=0 #20

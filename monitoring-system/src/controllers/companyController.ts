@@ -198,6 +198,16 @@ export const deleteCompanySettings = async (req: Request, res: Response) => {
       });
     }
 
+    // Если это последняя компания, удаляем весь документ
+    if (settings.companies.length === 1) {
+      console.log('Удаление последней компании, удаляем весь документ');
+      await CompanySettings.deleteOne({ userId });
+      return res.status(200).json({
+        success: true,
+        message: 'Последняя компания успешно удалена'
+      });
+    }
+
     // Находим индекс компании для удаления
     const companyIndex = settings.companies.findIndex(company => {
       console.log('Сравниваем:', {

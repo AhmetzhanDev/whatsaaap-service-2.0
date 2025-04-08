@@ -6,6 +6,7 @@ import { io } from '../server';
 import { sendVerificationCode } from './adminClient';
 import qrcode from 'qrcode';
 import { Socket } from 'socket.io';
+import { UserModel } from '../models/User';
 
 // Глобальная переменная для хранения таймеров QR-кодов
 const qrTimers = new Map<string, NodeJS.Timeout>();
@@ -195,6 +196,17 @@ export const generateUserQR = async (userId: string, io: any): Promise<string> =
         qrStatus[userId] = 'ready';
         emitQRStatus(userId, 'ready', 'WhatsApp клиент готов к работе', io);
         
+        // Обновляем статус авторизации в БД
+        UserModel.findByIdAndUpdate(
+          userId,
+          { whatsappAuthorized: true },
+          { new: true }
+        ).then(() => {
+          console.log(`[QR-DEBUG] Статус WhatsApp обновлен на ready для пользователя ${userId}`);
+        }).catch((error: Error) => {
+          console.error(`[QR-DEBUG] Ошибка при обновлении статуса WhatsApp:`, error);
+        });
+        
         // Получаем socketId пользователя
         const socketId = getSocketIdByUserId(io, userId);
 
@@ -204,6 +216,7 @@ export const generateUserQR = async (userId: string, io: any): Promise<string> =
             status: 'ready',
             message: 'WhatsApp клиент готов к работе',
             timestamp: new Date().toISOString(),
+            whatsappAuthorized: true
           });
         } else {
           console.error('[QR-DEBUG] Не найден socketId для userId:', userId);
