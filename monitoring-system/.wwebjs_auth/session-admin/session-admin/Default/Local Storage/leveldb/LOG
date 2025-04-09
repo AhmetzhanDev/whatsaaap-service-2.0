@@ -1,7 +1,0 @@
-2025/04/08-20:32:03.949 79ebe5 Reusing MANIFEST /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Local Storage/leveldb/MANIFEST-000001
-2025/04/08-20:32:03.954 79ebe5 Recovering log #17
-2025/04/08-20:32:03.954 79ebe5 (ignoring error) /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Local Storage/leveldb/000017.log: dropping 6910 bytes; Corruption: checksum mismatch
-2025/04/08-20:32:03.954 79ebe5 Reusing old log /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Local Storage/leveldb/000017.log 
-2025/04/09-01:55:53.303 79ebe7 Level-0 table #20: started
-2025/04/09-01:55:53.323 79ebe7 Level-0 table #20: 13286 bytes OK
-2025/04/09-01:55:53.329 79ebe7 Delete type=0 #17
