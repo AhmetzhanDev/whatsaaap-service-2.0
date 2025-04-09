@@ -34,6 +34,7 @@ export const saveCompanySettings = async (req: Request, res: Response) => {
     const newCompany = {
       id: idCompany,
       nameCompany,
+      phoneNumber: req.body.phoneNumber,
       managerResponse: responseTime,
       createdAt: new Date()
     };
@@ -249,5 +250,58 @@ export const deleteCompanySettings = async (req: Request, res: Response) => {
       success: false,
       message: 'Произошла ошибка при удалении компании'
     });
+  }
+};
+
+export const getData = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Необходимо указать userId'
+      });
+    }
+
+    const settings = await CompanySettings.findOne({ userId });
+
+    if (!settings || settings.companies.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Компании не найдены'
+      });
+    }
+
+    res.status(200).json({
+      userId: settings.userId,
+      companies: settings.companies
+    });
+  } catch (error) {
+    console.error('Ошибка при получении данных:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Произошла ошибка при получении данных'
+    });
+  }
+};
+
+export const getTelegramLink = async (req: Request, res: Response) => {
+  try {
+    const { userId, companyName } = req.params;
+    const settings = await CompanySettings.findOne({ userId });
+    
+    if (!settings) {
+      return res.status(404).json({ success: false, message: 'Настройки не найдены' });
+    }
+
+    const company = settings.companies.find(c => c.nameCompany === companyName);
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'Компания не найдена' });
+    }
+
+    res.status(200).json({ success: true, telegramInviteLink: company.telegramInviteLink });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Ошибка сервера' });
   }
 }; 

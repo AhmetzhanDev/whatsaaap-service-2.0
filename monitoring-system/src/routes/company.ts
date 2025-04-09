@@ -3,7 +3,9 @@ import {
   saveCompanySettings, 
   getCompanySettings, 
   updateCompanySettings,
-  deleteCompanySettings 
+  deleteCompanySettings,
+  getData,
+  getTelegramLink
 } from '../controllers/companyController';
 
 const router = express.Router();
@@ -19,5 +21,11 @@ router.put('/settings/:userId/:companyId', updateCompanySettings);
 
 // Удаление компании
 router.delete('/settings/:userId/:companyId', deleteCompanySettings);
+
+// Получение данных компаний для фронтенда
+router.get('/getData/:userId', getData);
+
+// Получение ссылки на Telegram для конкретной компании
+router.get('/telegram-link/:userId/:companyName', getTelegramLink);
 
 export default router; 
