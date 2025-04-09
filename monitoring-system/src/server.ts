@@ -11,6 +11,7 @@ import companyRoutes from './routes/company';
 import { initAdminClient } from './whatsapp/adminClient';
 import morgan from 'morgan';
 import jwt from 'jsonwebtoken';
+import { TelegramService } from './telegram/telegramClient';
 
 dotenv.config();
 const app = express();
@@ -128,7 +129,15 @@ httpServer.listen(PORT, async () => {
   // Инициализируем админский клиент при запуске сервера
   try {
     await initAdminClient();
-    console.log('Админский клиент инициализирован');
+    console.log('Админский клиент готов к использованию');
+    
+    // Инициализация Telegram после WhatsApp
+    const telegramService = TelegramService.getInstance();
+    telegramService.initialize().then(() => {
+      console.log('Telegram клиент готов к использованию');
+    }).catch(err => {
+      console.error('Ошибка инициализации Telegram:', err);
+    });
   } catch (error) {
     console.error('Ошибка при инициализации админского клиента:', error);
   }

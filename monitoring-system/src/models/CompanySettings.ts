@@ -15,6 +15,14 @@ const companySchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  telegramGroupId: {
+    type: Number,
+    required: false
+  },
+  telegramInviteLink: {
+    type: String,
+    required: false
+  },
   createdAt: {
     type: Date,
     default: Date.now

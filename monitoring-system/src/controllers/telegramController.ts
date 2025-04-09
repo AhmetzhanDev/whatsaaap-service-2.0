@@ -1,24 +1,41 @@
-import { Response } from 'express';
-import { AuthRequest } from '../middlewares/authMiddleware';
+import { Request, Response } from 'express';
+import { TelegramService } from '../telegram/telegramClient';
 
-export const createTelegramGroup = async (req: AuthRequest, res: Response): Promise<void> => {
-  try {
-    const userId = req.user?.id;
-    if (!userId) {
-      res.status(401).json({ error: 'Пользователь не авторизован' });
-      return;
+export class TelegramController {
+  private telegramService: TelegramService;
+
+  constructor() {
+    this.telegramService = TelegramService.getInstance();
+  }
+
+  public async initializeClient(req: Request, res: Response): Promise<void> {
+    try {
+      await this.telegramService.initialize();
+      res.status(200).json({ message: 'Telegram клиент успешно инициализирован' });
+    } catch (error) {
+      console.error('Ошибка при инициализации Telegram клиента:', error);
+      res.status(500).json({ error: 'Ошибка при инициализации Telegram клиента' });
     }
-    res.json({ message: 'Telegram группа создана' });
-  } catch (error) {
-    res.status(500).json({ error: 'Ошибка создания группы' });
   }
-};
 
-export const sendTelegramAlert = async (req: AuthRequest, res: Response): Promise<void> => {
-  try {
-    const { message } = req.body;
-    res.json({ message: 'Уведомление отправлено' });
-  } catch (error) {
-    res.status(500).json({ error: 'Ошибка отправки уведомления' });
+  public async createGroups(req: Request, res: Response): Promise<void> {
+    try {
+      const companies = req.body.companies || [];
+      await this.telegramService.createGroupsForCompanies(companies);
+      res.status(200).json({ message: 'Группы успешно созданы' });
+    } catch (error) {
+      console.error('Ошибка при создании групп:', error);
+      res.status(500).json({ error: 'Ошибка при создании групп' });
+    }
   }
-}; 
+
+  public async disconnectClient(req: Request, res: Response): Promise<void> {
+    try {
+      await this.telegramService.disconnect();
+      res.status(200).json({ message: 'Telegram клиент успешно отключен' });
+    } catch (error) {
+      console.error('Ошибка при отключении Telegram клиента:', error);
+      res.status(500).json({ error: 'Ошибка при отключении Telegram клиента' });
+    }
+  }
+} 

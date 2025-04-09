@@ -191,11 +191,7 @@ export const initAdminClient = async (): Promise<void> => {
     }
 
     // Если есть существующая сессия, пробуем её использовать
-    if (checkExistingSession()) {
-      console.log('Найдена существующая сессия админа');
-    } else {
-      console.log('Существующая сессия админа не найдена');
-    }
+   
 
     adminClient = new Client({
       authStrategy: new LocalAuth({
@@ -261,7 +257,7 @@ export const initAdminClient = async (): Promise<void> => {
           console.error('Ошибка при чтении файла сессии:', error);
         }
       } else {
-        console.error('Файл сессии не найден после аутентификации');
+      
       }
     });
 

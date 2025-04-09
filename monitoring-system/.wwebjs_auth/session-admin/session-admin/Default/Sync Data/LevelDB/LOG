@@ -1,3 +1,3 @@
-2025/04/07-20:34:05.579 7007 Reusing MANIFEST /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Sync Data/LevelDB/MANIFEST-000001
-2025/04/07-20:34:05.588 7007 Recovering log #3
-2025/04/07-20:34:05.588 7007 Reusing old log /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Sync Data/LevelDB/000003.log 
+2025/04/08-20:32:03.876 79ebaf Reusing MANIFEST /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Sync Data/LevelDB/MANIFEST-000001
+2025/04/08-20:32:03.879 79ebaf Recovering log #3
+2025/04/08-20:32:03.879 79ebaf Reusing old log /Users/ahmetzhanamanzhol/whatsapp-servise/monitoring-system/.wwebjs_auth/session-admin/session-admin/Default/Sync Data/LevelDB/000003.log 

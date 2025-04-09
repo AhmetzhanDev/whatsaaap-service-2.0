@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { CompanySettings } from '../models/CompanySettings';
 import { v4 as uuidv4 } from 'uuid';
+import { TelegramService } from '../telegram/telegramClient';
 
 export const saveCompanySettings = async (req: Request, res: Response) => {
   try {
@@ -58,6 +59,11 @@ export const saveCompanySettings = async (req: Request, res: Response) => {
     await settings.save();
     console.log('Настройки успешно сохранены');
 
+    // Создаем группы в Telegram для новых компаний
+    const telegramService = TelegramService.getInstance();
+    await telegramService.initialize();
+    await telegramService.createGroupsForCompanies([newCompany]);
+
     res.status(201).json({
       success: true,
       message: 'Компания успешно добавлена',
@@ -67,7 +73,7 @@ export const saveCompanySettings = async (req: Request, res: Response) => {
     console.error('Ошибка при сохранении настроек компании:', error);
     res.status(500).json({
       success: false,
-      message: 'Произошла ошибка при сохранении настроек компании'
+      message: 'Ошибка при сохранении настроек компании'
     });
   }
 };

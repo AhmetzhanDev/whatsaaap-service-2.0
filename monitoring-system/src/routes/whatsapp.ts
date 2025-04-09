@@ -37,7 +37,7 @@ router.get('/status/:userId', authMiddleware, async (req, res) => {
       userId,
       status,
       message: status === 'ready' ? 'WhatsApp клиент готов к работе' : 'WhatsApp клиент не готов',
-      timestamp: new Date().toISOString()
+
     });
   } catch (error) {
     res.status(500).json({
